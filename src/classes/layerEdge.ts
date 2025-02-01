@@ -57,8 +57,14 @@ export class layerEdgeRefferal {
     const inviteData = {
       invite_code: this.refCode,
     };
+    const headers ={
+      Host: "referralapi.layeredge.io",
+      origin: "https://dashboard.layeredge.io",
+      Referer: "https://dashboard.layeredge.io"
+    }
+
     const response = await this.makeRequest("post", "https://referralapi.layeredge.io/api/referral/verify-referral-code", {
-      data: inviteData,
+      data: inviteData, headers: headers
     });
 
     if (response && response.data && response.data.data.valid === true) {
@@ -74,9 +80,14 @@ export class layerEdgeRefferal {
     const registeData = {
       walletAddress: this.wallet.address,
     };
+    const headers ={
+      Host: "referralapi.layeredge.io",
+      origin: "https://dashboard.layeredge.io",
+      Referer: "https://dashboard.layeredge.io"
+    }
   
     const response = await this.makeRequest("post", `https://referralapi.layeredge.io/api/referral/register-wallet/${this.refCode}`, {
-      data: registeData,
+      data: registeData, headers: headers,
     });
   
     if (response && response.data ) {
@@ -97,11 +108,17 @@ export class layerEdgeRefferal {
       sign: sign,
       timestamp: timestamp,
     };
+
+    const headers ={
+      Host: "referralapi.layeredge.io",
+      origin: "https://dashboard.layeredge.io",
+      Referer: "https://dashboard.layeredge.io"
+    }
   
     const response = await this.makeRequest(
       "post",
       `https://referralapi.layeredge.io/api/light-node/node-action/${this.wallet.address}/start`,
-      { data: dataSign }
+      { data: dataSign, headers: headers }
     );
 
     if (response && response.data && response.data.message === 'node action executed successfully') {
@@ -114,7 +131,12 @@ export class layerEdgeRefferal {
   }
 
   async cekNodeStatus():Promise<boolean> { 
-    const response = await this.makeRequest("get", `https://referralapi.layeredge.io/api/light-node/node-status/${this.wallet.address}`);
+    const headers ={
+      Host: "referralapi.layeredge.io",
+      origin: "https://dashboard.layeredge.io",
+      Referer: "https://dashboard.layeredge.io"
+    }
+    const response = await this.makeRequest("get", `https://referralapi.layeredge.io/api/light-node/node-status/${this.wallet.address}`,{headers: headers});
     if (response && response.data && response.data.data.startTimestamp !== null) {
       logMessage(null, null, "Node Status Running", "success");
       return true;
