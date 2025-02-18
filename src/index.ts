@@ -4,6 +4,12 @@ import { layerEdgeRefferal } from "./classes/layerEdge";
 import { getRandomProxy, loadProxies } from "./classes/proxy";
 import { logMessage, prompt, rl } from "./utils/logger";
 
+async function delay(min: number, max: number): Promise<void> {
+  const time = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(chalk.blue(`[*] Waiting for ${time} seconds before next request...`));
+  return new Promise((resolve) => setTimeout(resolve, time * 1000));
+}
+
 async function main(): Promise<void> {
   console.log(
     chalk.cyan(`
@@ -29,6 +35,9 @@ async function main(): Promise<void> {
     console.log(chalk.white("-".repeat(85)));
     logMessage(i + 1, count, "Process", "debug");
 
+    // Delay sebelum mengambil proxy dan melanjutkan ke langkah berikutnya
+    await delay(15, 30);
+
     const currentProxy = await getRandomProxy();
     const layerEdge = new layerEdgeRefferal(refCode, currentProxy);
 
@@ -53,7 +62,7 @@ async function main(): Promise<void> {
   console.log(chalk.magenta("\n[*] Dono bang!"));
   console.log(chalk.green(`[*] Account dono ${successful} dari ${count} akun`));
   console.log(chalk.magenta("[*] Result in accounts.txt"));
-  rl.close(); 
+  rl.close();
 }
 
 main().catch((err) => {
