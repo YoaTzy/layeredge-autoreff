@@ -35,8 +35,7 @@ async function main(): Promise<void> {
     console.log(chalk.white("-".repeat(85)));
     logMessage(i + 1, count, "Process", "debug");
 
-    // Delay sebelum mengambil proxy dan melanjutkan ke langkah berikutnya
-    await delay(15, 30);
+    await delay(250, 300);
 
     const currentProxy = await getRandomProxy();
     const layerEdge = new layerEdgeRefferal(refCode, currentProxy);
